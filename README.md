@@ -346,4 +346,82 @@ Now your changes are back and you're ready to continue!
 
 ---
 
+<br><br><br>
+
+## Git cherry-pick
+
+> `git cherry-pick` is used to **apply a specific commit from one branch onto another** — without merging the entire branch.
+
+Think of it like saying:
+*“I want **just that one commit**, not everything else from that branch.”*
+
+
+### When to Use `cherry-pick`
+
+* You accidentally committed a fix on the wrong branch and want to copy it to the right one.
+* You want to apply a **specific bug fix** or change to multiple branches (e.g., `main` and `release`).
+* You don’t want to merge the full feature branch but need one important commit from it.
+
+### Basic Command
+
+```bash
+git cherry-pick <commit-hash>
+```
+
+This applies the changes introduced by the given commit onto your current branch.
+
+
+### Example Workflow
+
+You have:
+
+```
+main:     A---B---C
+                  \
+feature:           D---E---F
+```
+
+Let’s say **commit `E`** is a useful fix and you want it in `main`.
+
+1. Switch to `main` branch:
+
+```bash
+git checkout main
+```
+
+2. Cherry-pick the commit:
+
+```bash
+git cherry-pick <commit-hash-of-E>
+```
+
+3. Your history will look like:
+
+```
+main:     A---B---C---E'
+                  \
+feature:           D---E---F
+```
+
+> `E'` is a **new commit** with the same changes as `E`, but a different hash.
+
+
+| Command                      | Description                                      |
+| ---------------------------- | ------------------------------------------------ |
+| `git cherry-pick -x <hash>`  | Adds reference to original commit in message     |
+| `git cherry-pick -n <hash>`  | Applies changes but doesn’t commit (stages only) |
+| `git cherry-pick --continue` | After resolving conflicts                        |
+| `git cherry-pick --abort`    | Abort cherry-pick process if needed              |
+
+
+## Cherry-pick vs Merge vs Rebase
+
+| Command       | Use When                            |
+| ------------- | ----------------------------------- |
+| `merge`       | Want to combine full branch history |
+| `rebase`      | Want to replay all commits in order |
+| `cherry-pick` | Want **only selected commits**      |
+
+---
+
 
