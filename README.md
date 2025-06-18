@@ -217,4 +217,133 @@ git push origin feature/my-changes
 
 ---
 
+<br><br><br>
+
+## Git Stash
+
+> `git stash` temporarily save changes in your working directory that are not yet committed, so you can switch branches or perform other operations without losing your work.
+
+It’s like saying: **"Hold these changes for me; I’ll come back to them later."**
+
+You're working on a new feature, but suddenly need to:
+
+* Switch to a different branch to fix a bug
+* Pull latest changes
+* Avoid committing half-done work
+
+Rather than committing or discarding your changes, you can stash them.
+
+
+
+### 1. stash your changes
+
+```bash
+git stash
+```
+
+This saves your uncommitted changes and reverts the working directory to the last commit.
+
+### 2. List available stashes
+
+```bash
+git stash list
+```
+
+Example output:
+
+```
+stash@{0}: WIP on feature1: 1234567 Add initial layout
+stash@{1}: WIP on main: abcdef0 Fix header bug
+```
+
+
+### 3. Apply stashed changes
+
+```bash
+git stash apply
+```
+
+> Re-applies the latest stash but **does not remove it** from stash list.
+
+To apply a specific stash:
+
+```bash
+git stash apply stash@{1}
+```
+
+
+### 4. Drop (delete) a stash
+
+```bash
+git stash drop stash@{0}
+```
+
+
+### 5. Apply and remove the stash (common case)
+
+```bash
+git stash pop
+```
+
+> Re-applies and **removes** the latest stash in one step.
+
+
+### 6. Stash only staged or only unstaged changes**
+
+```bash
+git stash -k   # Keep staged, stash only unstaged
+git stash -p   # Pick interactively what to stash
+```
+
+
+
+### 7. Stash with a message
+
+```bash
+git stash save "WIP: fixing login form"
+```
+
+
+## Example Use Case
+
+1. You're working on `feature-xyz`:
+
+```bash
+git status
+# modified: login.js
+# modified: utils.js
+```
+
+2. Suddenly you need to switch to `main` to review a hotfix:
+
+```bash
+git stash
+git checkout main
+```
+
+3. After you're done with `main`, go back:
+
+```bash
+git checkout feature-xyz
+git stash pop
+```
+
+Now your changes are back and you're ready to continue!
+
+
+## Summary Table
+
+| Command                    | Description                      |
+| -------------------------- | -------------------------------- |
+| `git stash`                | Save uncommitted changes         |
+| `git stash list`           | Show all stashes                 |
+| `git stash apply`          | Apply latest (or specific) stash |
+| `git stash pop`            | Apply and remove stash           |
+| `git stash drop stash@{n}` | Delete specific stash            |
+| `git stash clear`          | Remove all stashes               |
+| `git stash save "message"` | Save with custom message         |
+
+
+---
+
 
